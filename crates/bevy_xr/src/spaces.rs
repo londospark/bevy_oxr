@@ -1,3 +1,4 @@
+use bevy_render::RenderApp;
 use bevy_camera::visibility::Visibility;
 use bevy_derive::{Deref, DerefMut};
 use bevy_ecs::{component::Component, message::Message, resource::Resource, schedule::SystemSet};
@@ -15,11 +16,13 @@ pub struct XrSpaceSyncSet;
 /// Any Spaces will be invalid after the owning session exits
 #[repr(transparent)]
 #[derive(Component, Clone, Copy, Hash, PartialEq, Eq, Debug, ExtractComponent)]
+#[extract_app(RenderApp)]
 #[cfg_attr(feature = "reflect", derive(Reflect))]
 #[require(XrSpaceLocationFlags, Transform, Visibility, XrTracker)]
 pub struct XrSpace(u64);
 
 #[derive(Component, Clone, Copy, Debug, ExtractComponent, Default)]
+#[extract_app(RenderApp)]
 #[cfg_attr(feature = "reflect", derive(Reflect))]
 #[require(XrSpaceVelocityFlags)]
 pub struct XrVelocity {
@@ -45,15 +48,18 @@ pub struct XrDestroySpace(pub XrSpace);
 
 #[repr(transparent)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, Debug, Component, Deref, DerefMut, ExtractComponent)]
+#[extract_app(RenderApp)]
 #[cfg_attr(feature = "reflect", derive(Reflect))]
 pub struct XrReferenceSpace(pub XrSpace);
 
 #[repr(transparent)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, Debug, Resource, Deref, DerefMut, ExtractResource)]
+#[extract_app(RenderApp)]
 #[cfg_attr(feature = "reflect", derive(Reflect))]
 pub struct XrPrimaryReferenceSpace(pub XrReferenceSpace);
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, Debug, Component, ExtractComponent, Default)]
+#[extract_app(RenderApp)]
 #[cfg_attr(feature = "reflect", derive(Reflect))]
 pub struct XrSpaceLocationFlags {
     pub position_tracked: bool,
@@ -63,6 +69,7 @@ pub struct XrSpaceLocationFlags {
 #[derive(
     Clone, Copy, Hash, PartialEq, Eq, Debug, Component, ExtractComponent, Default,
 )]
+#[extract_app(RenderApp)]
 #[cfg_attr(feature = "reflect", derive(Reflect))]
 pub struct XrSpaceVelocityFlags {
     pub linear_valid: bool,

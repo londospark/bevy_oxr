@@ -99,6 +99,8 @@ unsafe impl GraphicsExt for openxr::Vulkan {
                     usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::COPY_DST,
                     view_formats: &[],
                 },
+                // A freshly acquired swapchain image has no defined layout.
+                wgpu::TextureUses::UNINITIALIZED,
             )
         };
         Ok(texture)
