@@ -14,6 +14,10 @@ d3d12 = ["wgpu/dx12", "wgpu-hal/dx12", "dep:winapi"]
 fb_passthrough = []
 reflect = ["dep:bevy_reflect"]
 window_support = ["dep:bevy_winit", "dep:bevy_window"]
+# Build the OpenXR loader into the binary and use it, instead of loading the
+# system's libopenxr_loader at runtime. Useful for shipping to systems that do
+# not install the loader, such as SteamOS. Windows builds always do this.
+static_loader = ["openxr/static"]
 
 [dev-dependencies]
 bevy.workspace = true
